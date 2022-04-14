@@ -18,7 +18,7 @@ import { load } from '../src/web3';
 const Home: NextPage = () => {
   const [input, setInput] = React.useState<string>('');
   const [refresh, setRefresh] = React.useState<boolean>(false);
-  const [address, setAddress] = React.useState<any>('');
+  const [address, setAddress] = React.useState<string>('');
   const [contract, setContract] = React.useState<any>(null);
   const [tasks, setTasks] = React.useState<any[]>([]);
 
@@ -30,17 +30,17 @@ const Home: NextPage = () => {
     setRefresh(true);
   };
 
-  const handleInput = (e: any) => {
-    setInput(e.target.value);
+  const handleInput = (e: React.FormEvent<HTMLInputElement>): void => {
+    setInput(e.currentTarget.value);
   };
 
-  const handleAdd = async () => {
+  const handleAdd = async (): Promise<void> => {
     await contract.createTask(input, { from: address });
     setInput('');
     setRefresh(true);
   };
 
-  const handleDoneToggle = async (id: number) => {
+  const handleDoneToggle = async (id: number): Promise<void> => {
     await contract.toggleCompleted(id, { from: address });
     setRefresh(true);
   };
